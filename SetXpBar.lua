@@ -7,11 +7,11 @@ end
 -- List of XP rates with corresponding functions
 local xpRates = {
     { text = "Experience:", isTitle = true },
-    { text = "x1 (Blizzlike)", func = function() SetXpRate(1) end },
+    { text = "x1", func = function() SetXpRate(1) end },
+    { text = "x2", func = function() SetXpRate(2) end },
     { text = "x3", func = function() SetXpRate(3) end },
+    { text = "x4", func = function() SetXpRate(4) end },
     { text = "x5", func = function() SetXpRate(5) end },
-    { text = "x7", func = function() SetXpRate(7) end },
-    { text = "x12", func = function() SetXpRate(12) end },
     { text = "Custom", func = function() StaticPopup_Show("SET_XP_RATE") end }, -- Open custom XP rate dialog
 }
 
