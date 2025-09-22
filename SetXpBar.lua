@@ -32,11 +32,52 @@ local xpBarMenu = CreateFrame("Frame", "SetXpBarMenu", UIParent, "UIDropDownMenu
 xpBarMenu.initialize = InitializeMenu
 
 -- Enable mouse interaction with the XP bar
-MainMenuExpBar:EnableMouse(true)
-MainMenuExpBar:SetScript("OnMouseDown", function(self, button)
-    if button == "RightButton" then
-        EasyMenu(xpRates, xpBarMenu, "cursor", 3, -3, "MENU")
+local xpBarFrame
+
+local function SetupXpBarInteraction()
+    if IsAddOnLoaded("ElvUI") then
+        local elvUIBar = _G["ElvUI_ExperienceBar"]
+        if elvUIBar then
+            -- Store the original OnMouseDown script if it exists
+            local originalOnMouseDown = elvUIBar:GetScript("OnMouseDown")
+            
+            -- Override the OnMouseDown script
+            elvUIBar:SetScript("OnMouseDown", function(self, button)
+                if button == "RightButton" then
+                    EasyMenu(xpRates, xpBarMenu, "cursor", 3, -3, "MENU")
+                end
+                
+                -- Call the original OnMouseDown script if it exists
+                if originalOnMouseDown then
+                    originalOnMouseDown(self, button)
+                end
+            end)
+            
+            elvUIBar:EnableMouse(true) -- Ensure mouse is enabled
+        else
+            -- If the frame isn't available yet, try again after a short delay
+            C_Timer.After(1, SetupXpBarInteraction)
+        end
+    else
+        -- Fallback to default UI's MainMenuExpBar
+        xpBarFrame = MainMenuExpBar
+        if xpBarFrame then
+            xpBarFrame:EnableMouse(true)
+            xpBarFrame:SetScript("OnMouseDown", function(self, button)
+                if button == "RightButton" then
+                    EasyMenu(xpRates, xpBarMenu, "cursor", 3, -3, "MENU")
+                end
+            end)
+        end
     end
+end
+
+-- Listen for PLAYER_LOGIN event to ensure all addons are loaded
+local eventFrame = CreateFrame("Frame")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+    SetupXpBarInteraction()
+    self:UnregisterEvent("PLAYER_LOGIN")
 end)
 
 -- Custom XP Rate Popup Dialog
