@@ -12,7 +12,6 @@ local xpRates = {
     { text = "x3", func = function() SetXpRate(3) end },
     { text = "x4", func = function() SetXpRate(4) end },
     { text = "x5", func = function() SetXpRate(5) end },
-    { text = "Custom", func = function() StaticPopup_Show("SET_XP_RATE") end }, -- Open custom XP rate dialog
 }
 
 -- Function to initialize the dropdown menu
