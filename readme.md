@@ -9,6 +9,8 @@ SetXpBar is a World of Warcraft addon designed to work in conjunction with the *
 *   **Quick XP Rate Selection:** Choose from predefined XP rates (x1, x2, x3, x4, x5) via a dropdown menu.
 *   **Custom XP Rate:** Set a specific XP rate using a custom input dialog.
 *   **UI Integration:** Works with both ElvUI's experience bar and the default World of Warcraft experience bar.
+![Default WoW XP Bar](assets/blizz-xp-set.png)
+![ElvUI XP Bar](assets/elvUI-xp-set.png)
 *   **Dependency Integration:** Communicates the selected XP rate to the `mod-individual-xp` module via chat commands.
 
 ## Requirements
